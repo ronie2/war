@@ -1,3 +1,14 @@
+def dummy_function():
+    pass
+
+
+test_strategy = dummy_function
+test_transaction = {
+    'buyer': None,
+    'plane_id': None,
+    'price': None
+}
+
 factories_params = [
     {
         'name': 'get_buyer',
@@ -71,6 +82,34 @@ class_params = [
                 'current_weapon': 'function',
                 'set_weapon': 'function',
                 'as_dict': 'function'
+            }
+        }
+    },
+    {
+        'name': 'Transaction',
+        'test_id': '004_Transaction_class',
+        'init_parameters': 'test_strategy, test_transaction',
+        'er': {
+            'parameters': {
+                '_transaction_strategy': 'function',
+                'transaction': 'dict',
+                'commit': 'function'
+            }
+        }
+    },
+    {
+        'name': 'WarPlanesShop',
+        'test_id': '004_WarPlanesShop_class',
+        'init_parameters': 'equipment',
+        'er': {
+            'parameters': {
+                'db': 'dict',
+                'buy_plane': 'function',
+                'buy_gun': 'function',
+                '_product_spec_by_id': 'function',
+                '_product_price_by_id': 'function',
+                '_WarPlanesShop__compatible_guns': 'function',
+                '_WarPlanesShop__update_player': 'function'
             }
         }
     },

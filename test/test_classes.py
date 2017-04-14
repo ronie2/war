@@ -14,20 +14,23 @@ from war.buyer import get_hangar
 from war.buyer import Buyer
 from war.buyer import Account
 from war.buyer import Hangar
+from war.transaction import Transaction
+from war.shop import WarPlanesShop
 
-from fixture_params import class_params
-from example_data import player
-from example_data import equipment
+from test.fixture_params import class_params, test_strategy, test_transaction
+from test.example_data import player, equipment
 
 
 @pytest.fixture(params=class_params)
 def constructor(request):
+    print(request.param)
     _id = request.param['test_id']
     constructor = eval(request.param['name'])
     init_parameters = eval(request.param['init_parameters'])
     er_parameters = request.param['er']['parameters']
 
-    return {'_id': _id, 'constructor': constructor,
+    return {'_id': _id,
+            'constructor': constructor,
             'init_parameters': init_parameters,
             'er_parameters': er_parameters}
 
@@ -39,7 +42,10 @@ def test_check_parameters_present(constructor):
     constr = constructor['constructor']
     init_parameters = constructor['init_parameters']
 
-    result = constr(init_parameters)
+    if isinstance(init_parameters, tuple):
+        result = constr(*init_parameters)
+    else:
+        result = constr(init_parameters)
 
     for parameter in constructor['er_parameters']:
         assert hasattr(result, parameter)
@@ -52,7 +58,10 @@ def test_check_parameters_type(constructor):
     constr = constructor['constructor']
     init_parameters = constructor['init_parameters']
 
-    result = constr(init_parameters)
+    if isinstance(init_parameters, tuple):
+        result = constr(*init_parameters)
+    else:
+        result = constr(init_parameters)
 
     for parameter, value_type in constructor['er_parameters'].items():
         SUT_parameter = getattr(result, parameter)
