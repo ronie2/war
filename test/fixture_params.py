@@ -22,5 +22,28 @@ factories_params = [
         'er': {
             'type': 'Hangar',
         }
+    },
+    {
+        'name': 'get_transaction',
+        'test_id': '004_get_transaction',
+        'input': '{"dummy_arg": None}',
+        'er': {
+            'type': 'Transaction'
+        }
+    }
+]
+
+class_params = [
+    {
+        'name': 'Buyer',
+        'test_id': '001_Buyer_class',
+        'init_parameters': 'player',
+        'er': {
+            'parameters': {
+                'id': 'int',
+                'account': 'Account',
+                'hangar': 'Hangar'
+            }
+        }
     }
 ]
