@@ -43,7 +43,7 @@ def test_check_parameters_present(constructor):
 
     for parameter in constructor['er_parameters']:
         assert hasattr(result, parameter)
-        #assert isinstance(result.parameter, eval(value_type)) , value_type
+
 
 def test_check_parameters_type(constructor):
     print(constructor['_id'])
@@ -56,9 +56,13 @@ def test_check_parameters_type(constructor):
 
     for parameter, value_type in constructor['er_parameters'].items():
         SUT_parameter = getattr(result, parameter)
-        ER_parameter = eval(value_type)
+        ER_parameter = value_type
+        if ER_parameter == 'function':
+            assert callable(SUT_parameter)
+        else:
+            ER_parameter = eval(value_type)
+            assert isinstance(SUT_parameter, ER_parameter)
 
-        assert isinstance(SUT_parameter, ER_parameter)
 
 if __name__ == '__main__':
     pytest.main()

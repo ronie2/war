@@ -45,5 +45,33 @@ class_params = [
                 'hangar': 'Hangar'
             }
         }
-    }
+    },
+    {
+        'name': 'Account',
+        'test_id': '002_Account_class',
+        'init_parameters': 'player',
+        'er': {
+            'parameters': {
+                'account': 'dict',
+                'decrease': 'function',
+                'has_enought_resource': 'function',
+                'as_dict': 'function'
+            }
+        }
+    },
+    {
+        'name': 'Hangar',
+        'test_id': '003_Hangar_class',
+        'init_parameters': 'player',
+        'er': {
+            'parameters': {
+                'planes': 'dict',
+                'add_plane': 'function',
+                'has_plane': 'function',
+                'current_weapon': 'function',
+                'set_weapon': 'function',
+                'as_dict': 'function'
+            }
+        }
+    },
 ]
