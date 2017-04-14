@@ -60,6 +60,8 @@ class Account:
 
         """
         for resource_type in price:
+            if resource_type not in self.account:
+                raise KeyError('Do not have required resource')
             self.account[resource_type] -= price[resource_type]
 
     def has_enought_resource(self, price):
