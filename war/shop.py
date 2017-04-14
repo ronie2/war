@@ -40,6 +40,16 @@ class WarPlanesShop(Shop):
 
         self.__update_player(player, transaction.transaction)
 
+    def _product_spec_by_id(self, product_id):
+        for product_group in self.db:
+            for db_id in product_group:
+                if product_id == db_id:
+                    return self.db[product_group][product_id]
+
+    def _product_price_by_id(self, product_id):
+        product_spec = self._product_spec_by_id(product_id)
+        return product_spec['price']
+
     def __compatible_guns(self, plane_id):
         product_spec = self._product_spec_by_id(plane_id)
         if 'compatible_guns' not in product_spec:

@@ -1,13 +1,13 @@
 def get_hangar(player):
-    return Hangar(player.planes)
+    return Hangar(player['planes'])
 
 
 def get_buyer(player):
     return Buyer(player)
 
 
-def get_account(resource):
-    return Account(resource)
+def get_account(player):
+    return Account(player['resources'])
 
 
 class Account:
@@ -71,7 +71,7 @@ class Buyer:
     def __init__(self, player):
         try:
             self.id = player['id']
-            self.account = get_account(player['resources'])
-            self.hangar = get_hangar(player['planes'])
+            self.account = get_account(player)
+            self.hangar = get_hangar(player)
         except KeyError:
             raise RuntimeError('A player parsing error. The keys are missing')

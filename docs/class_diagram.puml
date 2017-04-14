@@ -12,12 +12,12 @@ class Shop {
 + db
 {abstract} + buy_plane()
 {abstract} + buy_gun()
-- _product_spec_by_id()
-- _product_price_by_id()
 }
 class WarPlanesShop {
 + buy_plane()
 + buy_gun()
+- _product_spec_by_id()
+- _product_price_by_id()
 # __compatible_guns()
 # __update_player()
 }
