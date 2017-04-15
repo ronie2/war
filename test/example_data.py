@@ -29,8 +29,8 @@ equipment = {
 player = {
     'id': 0,
     'resources': {
-        'credits': 100,
-        'gold': 100
+        'credits': 1000,
+        'gold': 1000
     },
     'planes': {
         1001: {'gun': 201}

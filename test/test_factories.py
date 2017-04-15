@@ -43,18 +43,5 @@ def test_check_return_type(factories):
     assert isinstance(result, factories['er_type'])
 
 
-# def test_check_return_value(factories):
-#     print(factories['_id'])
-#
-#     # Call SUT
-#     func = factories['factory']
-#     input = factories['input']
-#
-#     result = func(input)
-#
-#     for key, value in
-#
-#     assert result == factories
-
 if __name__ == '__main__':
     pytest.main()

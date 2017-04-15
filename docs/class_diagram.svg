@@ -23,11 +23,11 @@ class WarPlanesShop {
 }
 class Buyer {
 + id
-+ account
++ balance
 + hangar
 }
 class Account {
-+ account
++ balance
 + decrease()
 + has_enought_resource()
 + as_dict()

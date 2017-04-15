@@ -20,18 +20,21 @@ def get_validator(transaction):
     """
     # If a "gun_id" isn't present, assume plane buy validator
     if 'gun_id' not in transaction:
-        return Validator(_buy_plane,
-                         transaction['buyer'],
-                         transaction['plane_id'],
-                         transaction['price'])
+        return Validator(_buy_plane, **transaction)
+
+        # return Validator(_buy_plane,
+        #                  transaction['buyer'],
+        #                  transaction['plane_id'],
+        #                  transaction['price'])
 
     # A "gun_id" is present, assume gun buy validator
-    return Validator(_buy_gun,
-                     transaction['buyer'],
-                     transaction['plane_id'],
-                     transaction['gun_id'],
-                     transaction['comp_guns'],
-                     transaction['price'])
+    # return Validator(_buy_gun,
+    #                  transaction['buyer'],
+    #                  transaction['plane_id'],
+    #                  transaction['gun_id'],
+    #                  transaction['comp_guns'],
+    #                  transaction['price'])
+    return Validator(_buy_gun, **transaction)
 
 
 def _buy_plane(*, buyer, plane_id, price):
@@ -103,4 +106,4 @@ class Validator:
         Returns: None
 
         """
-        self.validation_strategy(self.args, self.kwargs)
+        self.validation_strategy(**self.kwargs)

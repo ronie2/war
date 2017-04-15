@@ -11,6 +11,13 @@ sys.path.insert(0, test_root_path)
 from war.shop import WarPlanesShop
 from test.example_data import player, equipment
 
+# from war.shop import get_buyer
+from war.shop import Shop
+# from war.shop import get_transaction
+# from war.shop import TransactionValidationError
+# from war.shop import get_validator
+from war.shop import WarPlanesShop
+
 
 @pytest.fixture()
 def fixture_object():
@@ -23,8 +30,6 @@ def test_db_attribute(fixture_object):
 
 
 def test_buy_plane_function(fixture_object):
-    # init_player = deepcopy(player)
-    # init_equipment = deepcopy(equipment)
     plane_id = 1002
     shop = fixture_object
 

@@ -48,7 +48,7 @@ def get_transaction(transaction):
 
 
 class Transaction:
-    """This class is responsible for changing buyers account and hangar"""
+    """This class is responsible for changing buyers balance and hangar"""
 
     def __init__(self, strategy, transaction):
         """
@@ -69,4 +69,4 @@ class Transaction:
         Returns: None
 
         """
-        self._transaction_strategy()
+        self._transaction_strategy(self)

@@ -63,7 +63,7 @@ class_params = [
         'init_parameters': 'player',
         'er': {
             'parameters': {
-                'account': 'dict',
+                'balance': 'dict',
                 'decrease': 'function',
                 'has_enought_resource': 'function',
                 'as_dict': 'function'
@@ -109,7 +109,7 @@ class_params = [
                 '_product_spec_by_id': 'function',
                 '_product_price_by_id': 'function',
                 '_WarPlanesShop__compatible_guns': 'function',
-                '_WarPlanesShop__update_player': 'function'
+                # '_WarPlanesShop__update_player': 'function'
             }
         }
     },

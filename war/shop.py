@@ -39,8 +39,6 @@ class WarPlanesShop(Shop):
 
         transaction.commit()
 
-        self.__update_player(player, transaction.transaction)
-
     def buy_gun(self, player, plane_id, gun_id):
         """
         Buys gun for `player` by `gun_id` and installs it into
@@ -80,7 +78,7 @@ class WarPlanesShop(Shop):
 
         """
         for product_group in self.db:
-            for db_id in product_group:
+            for db_id in self.db[product_group]:
                 if product_id == db_id:
                     return self.db[product_group][product_id]
 
@@ -112,7 +110,3 @@ class WarPlanesShop(Shop):
         if 'compatible_guns' not in product_spec:
             raise KeyError('Product have no "compatible_guns" key')
         return product_spec['compatible_guns']
-
-    def __update_player(self, player, transaction):
-        player['resources'] = transaction['buyer'].account.as_dict()
-        player['planes'] = transaction['buyer'].hangar.as_dict()

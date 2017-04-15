@@ -1,0 +1,21 @@
+@startuml
+
+class Tests
+class UnitTests
+
+Tests <|-- UnitTests
+Tests <|-- IntegrationTests
+Tests <|-- UAT
+
+UnitTests <|-- FunctionsTests
+UnitTests <|-- ClassesTests
+FunctionsTests <|- FactoriesFuncsTests
+FunctionsTests <|-- StrategiesFuncsTests
+ClassesTests <|-- ClassInstantiationTests
+ClassesTests <|- ClassMethodTests
+
+IntegrationTests <|-- PositiveIntegrationTests
+IntegrationTests <|- NegativeIntegrationTests
+
+UAT <|-- CoverRisksByRiskAnalysis
+@enduml

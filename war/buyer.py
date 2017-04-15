@@ -38,20 +38,20 @@ def get_account(player):
 
 
 class Account:
-    """This class is responsible for buyers account"""
+    """This class is responsible for buyers balance"""
 
-    def __init__(self, account):
+    def __init__(self, balance):
         """
-        Initializes players account
+        Initializes players balance
 
         Args:
-            account (dict): Players account data as in player['resources']
+            balance (dict): Players balance data as in player['resources']
         """
-        self.account = account
+        self.balance = balance
 
     def decrease(self, price):
         """
-        Decreases account for specified price
+        Decreases balance for specified price
 
         Args:
             price (dict): product price dict
@@ -60,29 +60,29 @@ class Account:
 
         """
         for resource_type in price:
-            if resource_type not in self.account:
+            if resource_type not in self.balance:
                 raise KeyError('Do not have required resource')
-            self.account[resource_type] -= price[resource_type]
+            self.balance[resource_type] -= price[resource_type]
 
     def has_enought_resource(self, price):
         """
-        Checks if account has enough money
+        Checks if balance has enough money
 
         Args:
             price (dict): product price dict
 
-        Returns (bool): If account has enough money
+        Returns (bool): If balance has enough money
 
         """
         for resource in price:
-            if resource not in self.account:
+            if resource not in self.balance:
                 return False
-            if self.account[resource] < price[resource]:
+            if self.balance[resource] < price[resource]:
                 return False
         return True
 
     def as_dict(self):
-        return dict(self.account)
+        return dict(self.balance)
 
 
 class Hangar:
