@@ -3,8 +3,6 @@ from .buyer import get_buyer
 from .validator import get_validator
 from .transaction import get_transaction
 
-from .errors import TransactionValidationError
-
 
 class WarPlanesShop(Shop):
     """Concrete planes shop implementation"""
@@ -15,6 +13,9 @@ class WarPlanesShop(Shop):
         Args:
             equipment (dict): Equipment database like in example data
         """
+        msg_validator = get_validator({'equipment': equipment})
+        msg_validator.validate()
+
         super().__init__(equipment)
 
     def buy_plane(self, player, plane_id):
@@ -28,6 +29,9 @@ class WarPlanesShop(Shop):
         Returns: None
 
         """
+        msg_validator = get_validator({'player': player})
+        msg_validator.validate()
+
         transaction = get_transaction({
             'buyer': get_buyer(player),
             'plane_id': plane_id,
@@ -52,6 +56,9 @@ class WarPlanesShop(Shop):
         Returns: None
 
         """
+        msg_validator = get_validator({'player': player})
+        msg_validator.validate()
+
         transaction = get_transaction({
             'buyer': get_buyer(player),
             'plane_id': plane_id,
@@ -65,22 +72,26 @@ class WarPlanesShop(Shop):
 
         transaction.commit()
 
-        self.__update_player(player, transaction.transaction)
-
     def _product_spec_by_id(self, product_id):
+
         """
         Returns product specification by id stored id DB
 
         Args:
             product_id (int): Product id to retrieve from DB
 
-        Returns (dict|None): Product specification. None if product not found.
+        Returns (dict): Product specification. None if product not found.
 
         """
+        if not isinstance(product_id, int):
+            raise TypeError("Product ID should be integer")
+
         for product_group in self.db:
             for db_id in self.db[product_group]:
                 if product_id == db_id:
                     return self.db[product_group][product_id]
+
+        raise KeyError('Wrong product ID is given. Not found in DB')
 
     def _product_price_by_id(self, product_id):
         """
@@ -107,6 +118,4 @@ class WarPlanesShop(Shop):
 
         """
         product_spec = self._product_spec_by_id(plane_id)
-        if 'compatible_guns' not in product_spec:
-            raise KeyError('Product have no "compatible_guns" key')
         return product_spec['compatible_guns']

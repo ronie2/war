@@ -1,38 +1,121 @@
 import pytest
-import sys
-import os
 
-from copy import deepcopy
-
-# Adding a `war` package to the `sys.path` list for easy import
-test_root_path = os.path.abspath(__file__ + "/../")
-sys.path.insert(0, test_root_path)
-
-from war.shop import WarPlanesShop
-from test.example_data import player, equipment
-
-# from war.shop import get_buyer
-from war.shop import Shop
-# from war.shop import get_transaction
-# from war.shop import TransactionValidationError
-# from war.shop import get_validator
-from war.shop import WarPlanesShop
+from test.fixtures import *
 
 
-@pytest.fixture()
-def fixture_object():
-    return WarPlanesShop(equipment)
+def test_shop_init_values(shop_obj, ref_equipment):
+    assert shop_obj.db == ref_equipment
 
 
-def test_db_attribute(fixture_object):
-    shop = fixture_object
-    assert shop.db == equipment
+def test_buy_plane(shop_obj, ref_player, new_plane_id):
+    shop_obj.buy_plane(ref_player, new_plane_id)
+    assert new_plane_id in ref_player['planes']
 
 
-def test_buy_plane_function(fixture_object):
-    plane_id = 1002
-    shop = fixture_object
+def test_buy_plane_wrong_type(shop_obj, ref_player):
+    with pytest.raises(MessageValidationError,
+                       message="Expecting MessageValidationError"):
+        shop_obj.buy_plane("some_string", "some_string")
 
-    shop.buy_plane(player, plane_id)
+    with pytest.raises(TypeError, message="Expecting TypeError"):
+        shop_obj.buy_plane(ref_player, "some_string")
 
-    assert plane_id in player['planes']
+    with pytest.raises(MessageValidationError,
+                       message="Expecting MessageValidationError"):
+        shop_obj.buy_plane("some_string", 101)
+
+
+def test_buy_plane_wrong_value(shop_obj, ref_player):
+    with pytest.raises(KeyError, message="Expecting KeyError"):
+        shop_obj.buy_plane(ref_player, 12312421)
+
+
+def test_buy_gun(shop_obj, ref_player, not_bought_compatible_guns):
+    plane_id = not_bought_compatible_guns['plane_id']
+    guns = not_bought_compatible_guns['guns']
+    gun_id = next(iter(guns))
+
+    shop_obj.buy_gun(ref_player, plane_id, gun_id)
+
+    assert gun_id == ref_player['planes'][plane_id]['gun']
+
+
+def test_buy_gun_wrong_type(shop_obj, ref_player, not_bought_compatible_guns):
+    plane_id = not_bought_compatible_guns['plane_id']
+    guns = not_bought_compatible_guns['guns']
+    gun_id = next(iter(guns))
+
+    with pytest.raises(MessageValidationError, message="Expecting TypeError"):
+        shop_obj.buy_gun("some_string", "some_string", "some_string")
+
+    with pytest.raises(TypeError, message="Expecting TypeError"):
+        shop_obj.buy_gun(ref_player, "some_string", "some_string")
+
+    with pytest.raises(MessageValidationError,
+                       message="Expecting MessageValidationError"):
+        shop_obj.buy_gun("some_string", plane_id, "some_string")
+
+    with pytest.raises(MessageValidationError,
+                       message="Expecting MessageValidationError"):
+        shop_obj.buy_gun("some_string", "some_string", gun_id)
+
+
+def test_buy_gun_wrong_value(shop_obj, ref_player, not_bought_compatible_guns):
+    plane_id = not_bought_compatible_guns['plane_id']
+    guns = not_bought_compatible_guns['guns']
+    gun_id = next(iter(guns))
+
+    with pytest.raises(KeyError, message="Expecting KeyError"):
+        shop_obj.buy_gun(ref_player, 123123154, gun_id)
+
+
+def test_product_spec_by_id(shop_obj, new_plane_id, ref_equipment):
+    achieved_spec = shop_obj._product_spec_by_id(new_plane_id)
+    expected_spec = ref_equipment['planes'][new_plane_id]
+    assert achieved_spec == expected_spec
+
+
+def test_product_spec_by_id_wrong_type(shop_obj):
+    with pytest.raises(TypeError, message="Expecting TypeError"):
+        shop_obj._product_spec_by_id('some_string')
+
+
+def test_product_spec_by_id_wrong_value(shop_obj):
+    with pytest.raises(KeyError, message="Expecting KeyError"):
+        shop_obj._product_spec_by_id(12312312343)
+
+
+def test_product_price_by_id(shop_obj, new_plane_id, ref_equipment):
+    achieved_price = shop_obj._product_price_by_id(new_plane_id)
+    expected_price = ref_equipment['planes'][new_plane_id]['price']
+    assert achieved_price == expected_price
+
+
+def test_product_price_by_id_wrong_type(shop_obj):
+    with pytest.raises(TypeError, message="Expecting TypeError"):
+        shop_obj._product_price_by_id('some_string')
+
+
+def test_product_price_by_id_wrong_value(shop_obj):
+    with pytest.raises(KeyError, message=KeyError):
+        shop_obj._product_price_by_id(1323123124)
+
+
+def test_compatible_guns(shop_obj, new_plane_id, ref_equipment):
+    achieved_guns = shop_obj._WarPlanesShop__compatible_guns(new_plane_id)
+    expected_guns = ref_equipment['planes'][new_plane_id]['compatible_guns']
+    assert achieved_guns == expected_guns
+
+
+def test_compatible_guns_wrong_type(shop_obj):
+    with pytest.raises(TypeError, message="Expecting TypeError"):
+        shop_obj._WarPlanesShop__compatible_guns('some_string')
+
+
+def test_compatible_guns_wrong_value(shop_obj):
+    with pytest.raises(KeyError, message="Expecting KeyError"):
+        shop_obj._WarPlanesShop__compatible_guns(312312312)
+
+
+if __name__ == '__main__':
+    pytest.main()

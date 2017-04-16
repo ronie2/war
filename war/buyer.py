@@ -151,6 +151,9 @@ class Hangar:
         Returns: None
 
         """
+        if plane_id in self:
+            raise KeyError('Plane already in hangar')
+
         self[plane_id] = {'gun': None}
 
     def has_plane(self, plane_id):
@@ -188,6 +191,8 @@ class Hangar:
         Returns: None
 
         """
+        if not isinstance(gun_id, int):
+            raise TypeError('A gun id should be integer')
         self[plane_id]['gun'] = gun_id
 
     def as_dict(self):

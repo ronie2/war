@@ -5,6 +5,9 @@ class ShopErrors(Exception):
 class TransactionValidationError(ShopErrors):
     pass
 
+class MessageValidationError(ShopErrors):
+    pass
+
 
 class ProductsNotCompatible(TransactionValidationError):
     pass

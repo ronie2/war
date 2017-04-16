@@ -36,3 +36,19 @@ player = {
         1001: {'gun': 201}
     },
 }
+
+transaction_dummy = {'kwarg1': 'kwarg1', 'kwarg2': 'kwarg2'}
+
+buy_gun_transaction = {
+    'buyer': None,
+    'plane_id': None,
+    'gun_id': None,
+    'comp_guns': None,
+    'price': None
+}
+
+buy_plane_transaction = {
+    'buyer': None,
+    'plane_id': None,
+    'price': None
+}
