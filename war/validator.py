@@ -1,3 +1,4 @@
+from .buyer import Buyer
 from .errors import (
     TransactionValidationError,
     MessageValidationError
@@ -127,11 +128,16 @@ def _buy_plane(*, buyer, plane_id, price):
     Args:
         buyer (Buyer): A buyer to validate
         plane_id (int): A plane id
-        price (int): A plane price
+        price (dict): A plane price
 
     Returns: None
 
     """
+    if not all([isinstance(buyer, Buyer),
+                isinstance(plane_id, int),
+                isinstance(price, dict)]):
+        raise TypeError('Parameters types wrong')
+
     if buyer.hangar.has_plane(plane_id):
         raise TransactionValidationError('Product already bought')
 
@@ -148,11 +154,18 @@ def _buy_gun(*, buyer, plane_id, gun_id, comp_guns, price):
         plane_id (int): A plane id
         gun_id (int): A gun id
         comp_guns (set): Compatibility set
-        price (int): A gun price
+        price (dict): A gun price
 
     Returns: None
 
     """
+    if not all([isinstance(buyer, Buyer),
+                isinstance(plane_id, int),
+                isinstance(gun_id, int),
+                isinstance(comp_guns, set),
+                isinstance(price, dict)]):
+        raise TypeError('Parameters types wrong')
+
     if gun_id not in comp_guns:
         raise TransactionValidationError('Products are not compatible')
 

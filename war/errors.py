@@ -1,25 +1,18 @@
-class ShopErrors(Exception):
+class ShopError(Exception):
     pass
 
 
-class TransactionValidationError(ShopErrors):
-    pass
-
-class MessageValidationError(ShopErrors):
+class TransactionError(ShopError):
     pass
 
 
-class ProductsNotCompatible(TransactionValidationError):
+class TransactionValidationError(TransactionError):
     pass
 
 
-class ProductAlreadyBoat(TransactionValidationError):
+class MessageValidationError(TransactionError):
     pass
 
 
-class NotEnoughtResources(TransactionValidationError):
-    pass
-
-
-class NoSuchPlaneInHangar(TransactionValidationError):
+class ProductDatabaseError(ShopError):
     pass

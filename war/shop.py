@@ -2,6 +2,7 @@ from .base_shop import Shop
 from .buyer import get_buyer
 from .validator import get_validator
 from .transaction import get_transaction
+from .errors import ProductDatabaseError
 
 
 class WarPlanesShop(Shop):
@@ -91,7 +92,7 @@ class WarPlanesShop(Shop):
                 if product_id == db_id:
                     return self.db[product_group][product_id]
 
-        raise KeyError('Wrong product ID is given. Not found in DB')
+        raise ProductDatabaseError('Wrong product ID. Not found in DB')
 
     def _product_price_by_id(self, product_id):
         """

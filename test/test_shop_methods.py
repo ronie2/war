@@ -27,7 +27,8 @@ def test_buy_plane_wrong_type(shop_obj, ref_player):
 
 
 def test_buy_plane_wrong_value(shop_obj, ref_player):
-    with pytest.raises(KeyError, message="Expecting KeyError"):
+    with pytest.raises(ProductDatabaseError,
+                       message="Expecting ProductDatabaseError"):
         shop_obj.buy_plane(ref_player, 12312421)
 
 
@@ -66,7 +67,8 @@ def test_buy_gun_wrong_value(shop_obj, ref_player, not_bought_compatible_guns):
     guns = not_bought_compatible_guns['guns']
     gun_id = next(iter(guns))
 
-    with pytest.raises(KeyError, message="Expecting KeyError"):
+    with pytest.raises(ProductDatabaseError,
+                       message="Expecting ProductDatabaseError"):
         shop_obj.buy_gun(ref_player, 123123154, gun_id)
 
 
@@ -83,7 +85,8 @@ def test_product_spec_by_id_wrong_type(shop_obj):
 
 
 def test_product_spec_by_id_wrong_value(shop_obj):
-    with pytest.raises(KeyError, message="Expecting KeyError"):
+    with pytest.raises(ProductDatabaseError,
+                       message="Expecting ProductDatabaseError"):
         shop_obj._product_spec_by_id(12312312343)
 
 
@@ -100,7 +103,8 @@ def test_product_price_by_id_wrong_type(shop_obj):
 
 
 def test_product_price_by_id_wrong_value(shop_obj):
-    with pytest.raises(KeyError, message=KeyError):
+    with pytest.raises(ProductDatabaseError,
+                       message='Expecting ProductDatabaseError'):
         shop_obj._product_price_by_id(1323123124)
 
 
@@ -117,7 +121,8 @@ def test_compatible_guns_wrong_type(shop_obj):
 
 
 def test_compatible_guns_wrong_value(shop_obj):
-    with pytest.raises(KeyError, message="Expecting KeyError"):
+    with pytest.raises(ProductDatabaseError,
+                       message='Expecting ProductDatabaseError'):
         shop_obj._WarPlanesShop__compatible_guns(312312312)
 
 

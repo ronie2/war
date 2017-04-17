@@ -9,7 +9,11 @@ from war.buyer import get_account
 from war.transaction import Transaction, get_transaction
 from war.validator import Validator, get_validator, _buy_gun, _buy_plane
 
-from war.errors import TransactionValidationError, MessageValidationError
+from war.errors import (
+    TransactionValidationError,
+    MessageValidationError,
+    ProductDatabaseError
+)
 
 from test.example_data import (
     player,
@@ -26,6 +30,14 @@ def ref_player():
 
 
 @pytest.fixture()
+def ref_poor_player(ref_player):
+    ref_player['resources']['credits'] = 0
+    ref_player['resources']['gold'] = 0
+
+    return ref_player
+
+
+@pytest.fixture()
 def ref_equipment():
     return deepcopy(equipment)
 
@@ -34,6 +46,12 @@ def ref_equipment():
 def present_plane_id(ref_player):
     for plane_id, _ in ref_player['planes'].items():
         return plane_id
+
+
+@pytest.fixture()
+def present_gun_id(ref_player):
+    for plane_id, plane_spec in ref_player['planes'].items():
+        return plane_spec['gun']
 
 
 @pytest.fixture()
@@ -55,6 +73,13 @@ def compatible_guns(ref_equipment, present_plane_id):
 
 
 @pytest.fixture()
+def incompatible_gun(compatible_guns):
+    for passible_id in range(100, 999):
+        if passible_id not in compatible_guns:
+            return passible_id
+
+
+@pytest.fixture()
 def not_bought_compatible_guns(ref_player, ref_equipment, buy_new_plane):
     for plane_id, gun in ref_player['planes'].items():
         comp_guns = ref_equipment['planes'][plane_id]['compatible_guns']
@@ -71,6 +96,12 @@ def buyer_obj(ref_player):
     deepcopy(ref_player)
     from war.buyer import Buyer
     return Buyer(deepcopy(ref_player))
+
+
+@pytest.fixture()
+def shop_type():
+    from war.shop import WarPlanesShop
+    return WarPlanesShop
 
 
 @pytest.fixture()
