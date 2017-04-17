@@ -6,6 +6,7 @@ from war.buyer import get_buyer
 from war.buyer import get_hangar
 from war.buyer import get_account
 
+from war.transaction import Transaction, get_transaction
 from war.validator import Validator, get_validator, _buy_gun, _buy_plane
 
 from war.errors import TransactionValidationError, MessageValidationError
@@ -144,3 +145,63 @@ def ref_buy_gun_tran(ref_equipment, not_bought_compatible_guns):
     buy_gun_tran['price'] = plane_spec['price']
 
     return {'tran': buy_gun_tran, 'mock': mock}
+
+
+@pytest.fixture()
+def mock():
+    return MagicMock
+
+
+@pytest.fixture()
+def buy_gun_tran_strategy_mock(mock):
+    mock.transaction = MagicMock()
+    mock.transaction['buyer'] = MagicMock()
+    mock.transaction['buyer'].account = MagicMock()
+    mock.transaction['buyer'].account.decrease = MagicMock()
+    mock.transaction['price'] = MagicMock()
+    mock.transaction['plane_id'] = MagicMock()
+    mock.transaction['gun_id'] = MagicMock()
+
+    return mock
+
+
+@pytest.fixture()
+def buy_plane_tran_strategy_mock(mock):
+    mock.transaction = MagicMock()
+    mock.transaction['buyer'] = MagicMock()
+    mock.transaction['buyer'].account = MagicMock()
+    mock.transaction['buyer'].account.decrease = MagicMock()
+    mock.transaction['price'] = MagicMock()
+
+    return mock
+
+
+@pytest.fixture()
+def buy_plane_tran_strategy():
+    from war.transaction import _buy_plane
+    return _buy_plane
+
+
+@pytest.fixture()
+def buy_gun_tran_strategy():
+    from war.transaction import _buy_gun
+    return _buy_gun
+
+
+@pytest.fixture()
+def tran_obj(ref_transaction_dummy):
+    from war.transaction import Transaction
+    mock = MagicMock()
+    tran = Transaction(mock, ref_transaction_dummy)
+    return {'mock': mock, 'tran_obj': tran}
+
+
+@pytest.fixture()
+def tran_type():
+    return Transaction
+
+
+@pytest.fixture()
+def tran_factory():
+    from war.transaction import get_transaction
+    return get_transaction

@@ -12,6 +12,7 @@ def test_hangar_planes(hangar_obj, ref_player):
 def test_hangar_add_plane(hangar_obj, new_plane_id):
     """Tests positive adding plane to hangar"""
     hangar_obj.add_plane(new_plane_id)
+
     assert new_plane_id in hangar_obj.planes
 
 
@@ -29,6 +30,7 @@ def test_hangar_add_plane_wrong_value(hangar_obj, present_plane_id):
 
 def test_hangar_has_plane_pass(hangar_obj, present_plane_id):
     """Tests a True value of hangar has plane"""
+
     assert hangar_obj.has_plane(present_plane_id) is True
 
 
@@ -40,6 +42,7 @@ def test_hangar_has_plane_wrong_type(hangar_obj):
 
 def test_hangar_has_plane_wrong_value(hangar_obj, new_plane_id):
     """Tests a False value of hangar has plane"""
+
     assert hangar_obj.has_plane(new_plane_id) is False
 
 
@@ -48,6 +51,7 @@ def test_hangar_current_weapon_pass(hangar_obj, present_plane_id,
     """Tests value returned by hangar current weapon by plane_id"""
     result = hangar_obj.current_weapon(present_plane_id)
     expected = ref_player['planes'][present_plane_id]['gun']
+
     assert result == expected
 
 
@@ -70,7 +74,6 @@ def test_hangar_set_weapon_pass(hangar_obj, not_bought_compatible_guns):
     gun_id = next(iter(guns))
 
     hangar_obj.set_weapon(plane_id, gun_id)
-
     setted_gun = hangar_obj.planes[plane_id]['gun']
 
     assert setted_gun == gun_id
@@ -121,7 +124,9 @@ def test_check_decrease_function(account_obj):
 
 def test_has_enought_resource_function(account_obj):
     price = {'credits': 10, 'gold': 10}
+
     result = account_obj.has_enought_resource(price)
+
     assert result is True
 
 

@@ -9,6 +9,7 @@ def _buy_plane(owner):
     Returns: None
 
     """
+
     owner.transaction['buyer'].account.decrease(owner.transaction['price'])
     owner.transaction['buyer'].hangar.add_plane(owner.transaction['plane_id'])
 
@@ -23,6 +24,7 @@ def _buy_gun(owner):
 
     Returns: None
     """
+
     owner.transaction['buyer'].account.decrease(owner.transaction['price'])
     owner.transaction['buyer'].hangar.set_weapon(owner.transaction['plane_id'],
                                                  owner.transaction['gun_id'])
@@ -59,6 +61,12 @@ class Transaction:
             strategy (function): Concrete function to implement transaction
             transaction (dict): Dictionary with transaction specific details
         """
+        if not callable(strategy):
+            raise TypeError('Transaction strategy should be callable')
+
+        if not isinstance(transaction, dict):
+            raise TypeError('Transaction spec should be callable')
+
         self._transaction_strategy = strategy
         self.transaction = transaction
 

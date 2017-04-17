@@ -9,6 +9,7 @@ def test_shop_init_values(shop_obj, ref_equipment):
 
 def test_buy_plane(shop_obj, ref_player, new_plane_id):
     shop_obj.buy_plane(ref_player, new_plane_id)
+
     assert new_plane_id in ref_player['planes']
 
 
@@ -72,6 +73,7 @@ def test_buy_gun_wrong_value(shop_obj, ref_player, not_bought_compatible_guns):
 def test_product_spec_by_id(shop_obj, new_plane_id, ref_equipment):
     achieved_spec = shop_obj._product_spec_by_id(new_plane_id)
     expected_spec = ref_equipment['planes'][new_plane_id]
+
     assert achieved_spec == expected_spec
 
 
@@ -88,6 +90,7 @@ def test_product_spec_by_id_wrong_value(shop_obj):
 def test_product_price_by_id(shop_obj, new_plane_id, ref_equipment):
     achieved_price = shop_obj._product_price_by_id(new_plane_id)
     expected_price = ref_equipment['planes'][new_plane_id]['price']
+
     assert achieved_price == expected_price
 
 
@@ -104,6 +107,7 @@ def test_product_price_by_id_wrong_value(shop_obj):
 def test_compatible_guns(shop_obj, new_plane_id, ref_equipment):
     achieved_guns = shop_obj._WarPlanesShop__compatible_guns(new_plane_id)
     expected_guns = ref_equipment['planes'][new_plane_id]['compatible_guns']
+
     assert achieved_guns == expected_guns
 
 

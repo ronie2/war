@@ -7,6 +7,7 @@ def test_validator_init_values(validator_obj, ref_transaction_dummy):
     strategy = validator_obj['validator_obj'].validation_strategy
     kwargs = validator_obj['validator_obj'].kwargs
     mock = validator_obj['mock']
+
     assert kwargs == ref_transaction_dummy
     assert strategy == mock
 
@@ -15,6 +16,7 @@ def test_validator_validate_pass(validator_obj, ref_transaction_dummy):
     validator = validator_obj['validator_obj']
     mock = validator_obj['mock']
     validator.validate()
+
     assert mock.called
     assert mock.call_args[1] == ref_transaction_dummy
 
