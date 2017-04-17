@@ -23,7 +23,6 @@ from test.example_data import player, equipment
 
 @pytest.fixture(params=class_params)
 def constructor(request):
-    print(request.param)
     _id = request.param['test_id']
     constructor = eval(request.param['name'])
     init_parameters = eval(request.param['init_parameters'])
