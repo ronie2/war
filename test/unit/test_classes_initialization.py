@@ -1,26 +1,24 @@
+"""Tests static class instances inialization. Test is initialized with
+data_initialization_params.py module. Feel free to change data params module
+to add/change expected results.
+"""
 import pytest
-import sys
-import os
-
-from class_constructor import constructor
-
-# Adding a `war` package to the `sys.path` list for easy import
-test_root_path = os.path.abspath(__file__ + "/../")
-sys.path.insert(0, test_root_path)
-
-import war
 
 from war.buyer import Account
 from war.buyer import Hangar
 from war.transaction import Transaction
 
+from test.unit.fixture_class_initialization import constructor
+
 
 def test_check_parameters_present(constructor):
+    """Checks that all required attributes are present"""
     for parameter in constructor['er_parameters']:
         assert hasattr(constructor['result'], parameter)
 
 
 def test_check_parameters_type(constructor):
+    """Checks parameters types"""
     for parameter, value_type in constructor['er_parameters'].items():
         SUT_parameter = getattr(constructor['result'], parameter)
         ER_parameter = value_type

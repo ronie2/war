@@ -1,14 +1,13 @@
+"""This module is container for logical fixtures.
+It holds imports for other modules.
+"""
 from copy import deepcopy
 import pytest
 from unittest.mock import MagicMock
-from war.buyer import Buyer
-from war.buyer import get_buyer
-from war.buyer import get_hangar
-from war.buyer import get_account
 
 from war.transaction import Transaction, get_transaction
-from war.validator import Validator, get_validator, _buy_gun, _buy_plane
 
+# Above errors are not used by this module. Tests uses this errors.
 from war.errors import (
     TransactionValidationError,
     MessageValidationError,
@@ -31,6 +30,7 @@ def ref_player():
 
 @pytest.fixture()
 def ref_poor_player(ref_player):
+    """This fixture returns player with no money"""
     ref_player['resources']['credits'] = 0
     ref_player['resources']['gold'] = 0
 
@@ -44,18 +44,21 @@ def ref_equipment():
 
 @pytest.fixture()
 def present_plane_id(ref_player):
+    """Prepares id of plane that is in players hangar"""
     for plane_id, _ in ref_player['planes'].items():
         return plane_id
 
 
 @pytest.fixture()
 def present_gun_id(ref_player):
+    """Prepares gun id setted for a plane in hangar"""
     for plane_id, plane_spec in ref_player['planes'].items():
         return plane_spec['gun']
 
 
 @pytest.fixture()
 def new_plane_id(ref_equipment, ref_player):
+    """Prepares plane id that is in DB but not in players hangar"""
     for plane_id in ref_equipment['planes']:
         if plane_id not in ref_player['planes']:
             return plane_id
@@ -63,17 +66,20 @@ def new_plane_id(ref_equipment, ref_player):
 
 @pytest.fixture()
 def buy_new_plane(ref_player, new_plane_id):
+    """Adds plane to players hangar"""
     ref_player['planes'][new_plane_id] = {'gun': None}
 
 
 @pytest.fixture()
 def compatible_guns(ref_equipment, present_plane_id):
+    """Prepares gun id setted for present plane id"""
     guns = ref_equipment['planes'][present_plane_id]['compatible_guns']
     return guns
 
 
 @pytest.fixture()
 def incompatible_gun(compatible_guns):
+    """Prepares id of incompatible gun"""
     for passible_id in range(100, 999):
         if passible_id not in compatible_guns:
             return passible_id
@@ -81,6 +87,7 @@ def incompatible_gun(compatible_guns):
 
 @pytest.fixture()
 def not_bought_compatible_guns(ref_player, ref_equipment, buy_new_plane):
+    """Prepares new plane id and set of compatible guns"""
     for plane_id, gun in ref_player['planes'].items():
         comp_guns = ref_equipment['planes'][plane_id]['compatible_guns']
         installed_guns = set([ref_player['planes'][plane_id]['gun']])
@@ -149,6 +156,7 @@ def ref_transaction_dummy():
 
 @pytest.fixture()
 def ref_buy_plane_tran(new_plane_id, ref_equipment):
+    """Prepares buy plane transaction. Buyer is substituted by mock object."""
     buy_plane_tran = deepcopy(buy_plane_transaction)
     mock = MagicMock()
 
@@ -161,6 +169,7 @@ def ref_buy_plane_tran(new_plane_id, ref_equipment):
 
 @pytest.fixture()
 def ref_buy_gun_tran(ref_equipment, not_bought_compatible_guns):
+    """Prepares buy gun transaction. Buyer is substituted by mock object."""
     buy_gun_tran = deepcopy(buy_gun_transaction)
 
     plane_id = not_bought_compatible_guns['plane_id']
@@ -185,6 +194,7 @@ def mock():
 
 @pytest.fixture()
 def buy_gun_tran_strategy_mock(mock):
+    """Buy gun transaction mock"""
     mock.transaction = MagicMock()
     mock.transaction['buyer'] = MagicMock()
     mock.transaction['buyer'].account = MagicMock()
@@ -198,6 +208,7 @@ def buy_gun_tran_strategy_mock(mock):
 
 @pytest.fixture()
 def buy_plane_tran_strategy_mock(mock):
+    """Buy plane transaction mock"""
     mock.transaction = MagicMock()
     mock.transaction['buyer'] = MagicMock()
     mock.transaction['buyer'].account = MagicMock()

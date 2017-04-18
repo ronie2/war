@@ -1,49 +1,23 @@
+"""This module is used by fixture_class_inialization.py as parameters
+and data source.
+"""
+
+# Dummy function to use as strategy when initializing class instances
 def dummy_function():
     pass
 
 
 test_strategy = dummy_function
+
+# Dummy dict to use as dummy kwargs when initializing class instances
 test_transaction = {
     'buyer': None,
     'plane_id': None,
     'price': None
 }
 
-factories_params = [
-    {
-        'name': 'get_buyer',
-        'test_id': '001_get_buyer',
-        'input': 'player',
-        'er': {
-            'type': 'Buyer',
-        }
-    },
-    {
-        'name': 'get_account',
-        'test_id': '002_get_account',
-        'input': 'player',
-        'er': {
-            'type': 'Account',
-        }
-    },
-    {
-        'name': 'get_hangar',
-        'test_id': '003_get_hangar',
-        'input': 'player',
-        'er': {
-            'type': 'Hangar',
-        }
-    },
-    {
-        'name': 'get_transaction',
-        'test_id': '004_get_transaction',
-        'input': '{"dummy_arg": None}',
-        'er': {
-            'type': 'Transaction'
-        }
-    }
-]
-
+# Expected results for class initialization.
+# Change/add parameters if you had to.
 class_params = [
     {
         'name': 'Buyer',
@@ -109,7 +83,6 @@ class_params = [
                 '_product_spec_by_id': 'function',
                 '_product_price_by_id': 'function',
                 '_WarPlanesShop__compatible_guns': 'function',
-                # '_WarPlanesShop__update_player': 'function'
             }
         }
     },

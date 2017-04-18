@@ -1,9 +1,8 @@
-import pytest
-from test.fixtures import *
+from test.unit.fixture_logic import *
 
 
-def test_hangar_planes(hangar_obj, ref_player):
-    """Tests that hangar is initialized with correct number of planes"""
+def test_hangar_init_values(hangar_obj, ref_player):
+    """Tests that hangar instance values are initialized correct"""
     hangar = hangar_obj
     for plane_id, plane_spec in hangar.planes.items():
         assert ref_player['planes'][plane_id] == hangar_obj.planes[plane_id]
@@ -106,7 +105,8 @@ def test_hangar_set_weapon_wrong_value(hangar_obj,
         hangar_obj.set_weapon(12312312, gun_id)
 
 
-def test_account_attribute(account_obj, ref_player):
+def test_account_init_values(account_obj, ref_player):
+    """Tests that players account instance values are initialized correct"""
     for resource, amount in account_obj.balance.items():
         expected = ref_player['resources'][resource]
         achieved = account_obj.balance[resource]
@@ -123,6 +123,7 @@ def test_check_decrease_function(account_obj):
 
 
 def test_has_enought_resource_function(account_obj):
+    """Checks that player from example_data.py has enough resource"""
     price = {'credits': 10, 'gold': 10}
 
     result = account_obj.has_enought_resource(price)

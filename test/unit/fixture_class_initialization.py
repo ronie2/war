@@ -1,24 +1,25 @@
+"""A fixture that prepares classes.
+It uses data from data_inialization_params.py file.
+You may change data_inialization_params.py file to add/change test params
+"""
 import pytest
-import sys
-import os
-
-# Adding a `war` package to the `sys.path` list for easy import
-test_root_path = os.path.abspath(__file__ + "/../")
-sys.path.insert(0, test_root_path)
-
-import war
 
 from war.buyer import get_buyer
 from war.buyer import get_account
 from war.buyer import get_hangar
+
 from war.buyer import Buyer
 from war.buyer import Account
 from war.buyer import Hangar
 from war.transaction import Transaction
 from war.shop import WarPlanesShop
 
-from test.fixture_params import class_params, test_strategy, test_transaction
 from test.example_data import player, equipment
+from test.unit.data_initialization_params import (
+    class_params,
+    test_strategy,
+    test_transaction
+)
 
 
 @pytest.fixture(params=class_params)
