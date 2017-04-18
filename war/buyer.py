@@ -1,3 +1,8 @@
+"""This module implements buyer abstraction. Buyer type aggregates
+Hangar and Account types.
+"""
+
+
 def get_hangar(player):
     """
     This is factory function for creation of a `Hangar` instances
@@ -5,7 +10,8 @@ def get_hangar(player):
     Args:
         player (dict): Original example data `player` dict
 
-    Returns (Hangar): `Hangar` instance initialized with player['planes'] data
+    Returns
+        Hangar: `Hangar` instance initialized with player['planes'] data
 
     """
     return Hangar(player['planes'])
@@ -18,7 +24,8 @@ def get_buyer(player):
     Args:
         player (dict): Original example data `player` dict
 
-    Returns (Buyer): `Buyer` instance initialized with player data
+    Returns
+        Buyer: `Buyer` instance initialized with player data
 
     """
     return Buyer(player)
@@ -31,7 +38,8 @@ def get_account(player):
     Args:
         player (dict): Original example data `player` dict
 
-    Returns (Account): `Account` instance initialized with player['resources']
+    Returns
+        Account: `Account` instance initialized with player['resources']
 
     """
     return Account(player['resources'])
@@ -56,7 +64,8 @@ class Account:
         Args:
             price (dict): product price dict
 
-        Returns: None
+        Returns:
+            None
 
         """
         for resource_type in price:
@@ -71,7 +80,8 @@ class Account:
         Args:
             price (dict): product price dict
 
-        Returns (bool): If balance has enough money
+        Returns
+            bool: If balance has enough money
 
         """
         for resource in price:
@@ -80,9 +90,6 @@ class Account:
             if self.balance[resource] < price[resource]:
                 return False
         return True
-
-    def as_dict(self):
-        return dict(self.balance)
 
 
 class Hangar:
@@ -93,6 +100,7 @@ class Hangar:
         Initialize hangar with planes
         Args:
             palanes (dict): Buyers hangar content
+
         """
         self.planes = palanes
 
@@ -103,7 +111,8 @@ class Hangar:
         Args:
             plane_id (int): Id of a plane to check
 
-        Returns (bool): If buyer hangar contains plane
+        Returns
+            bool: If buyer hangar contains plane
 
         """
         if not isinstance(plane_id, int):
@@ -117,7 +126,8 @@ class Hangar:
         Args:
             plane_id (int): Id of a plane to check
 
-        Returns (dict): Plane content
+        Returns
+            dict: Plane content
 
         """
         if not isinstance(plane_id, int):
@@ -134,11 +144,16 @@ class Hangar:
             plane_id (int): A plane id
             plane_spec (dict): A plane content
 
-        Returns: None
+        Returns:
+             None
 
         """
         if not isinstance(plane_id, int):
-            raise TypeError
+            raise TypeError('ID should be of type int')
+
+        if not isinstance(plane_spec, dict):
+            raise TypeError('Plane spec should be of type int')
+
         self.planes[plane_id] = plane_spec
 
     def add_plane(self, plane_id):
@@ -148,7 +163,8 @@ class Hangar:
         Args:
             plane_id (int): A plane id
 
-        Returns: None
+        Returns:
+            None
 
         """
         if plane_id in self:
@@ -161,9 +177,10 @@ class Hangar:
         Checks if a hangar contains plane
 
         Args:
-            plane_id (int): A plane id
+            plane_id (int): A plane ID
 
-        Returns (bool): If a plane is in the hangar
+        Returns
+            bool: True is a plane is in the hangar else returns False
 
         """
         return plane_id in self
@@ -173,9 +190,10 @@ class Hangar:
         Returns current plans gun
 
         Args:
-            plane_id (int): A plane id
+            plane_id (int): A plane ID
 
-        Returns (int): Gun id
+        Returns
+            int: Gun ID
 
         """
         return self[plane_id]['gun']
@@ -185,24 +203,16 @@ class Hangar:
         Sets new weapon on the plane
 
         Args:
-            plane_id (int): A plane id
-            gun_id (int): A gun id
+            plane_id (int): A plane ID
+            gun_id (int): A gun ID
 
-        Returns: None
+        Returns:
+            None
 
         """
         if not isinstance(gun_id, int):
             raise TypeError('A gun id should be integer')
         self[plane_id]['gun'] = gun_id
-
-    def as_dict(self):
-        """
-        Return hangar representation as dictionary
-
-        Returns (dict): Current hangar state
-
-        """
-        return dict(self.planes)
 
 
 class Buyer:
@@ -215,10 +225,10 @@ class Buyer:
 
         Args:
             player (dict): Original example data `player` dict
+
         """
-        try:
-            self.id = player['id']
-            self.account = get_account(player)
-            self.hangar = get_hangar(player)
-        except KeyError:
-            raise RuntimeError('A player parsing error. The keys are missing')
+        if not isinstance(player, dict):
+            raise TypeError('Player object should be of type dict')
+        self.id = player['id']
+        self.account = get_account(player)
+        self.hangar = get_hangar(player)

@@ -156,7 +156,8 @@ def _buy_gun(*, buyer, plane_id, gun_id, comp_guns, price):
         comp_guns (set): Compatibility set
         price (dict): A gun price
 
-    Returns: None
+    Returns:
+        None
 
     """
     if not all([isinstance(buyer, Buyer),
@@ -186,10 +187,12 @@ class Validator:
         """
         Initializes validator with validation strategy function and
         function  arguments.
+
         Args:
             strategy (function):
-            *args: Positional arguments that will pass to validation strategy
-            **kwargs: Key words arguments that will pass to validation strategy
+            args: Positional arguments that will pass to validation strategy
+            kwargs: Key words arguments that will pass to validation strategy
+
         """
         if not callable(strategy):
             raise TypeError('Validation strategy should be callable')
@@ -202,7 +205,8 @@ class Validator:
         """
         Validates transaction according to strategy function
 
-        Returns: None
+        Returns:
+             None
 
         """
         self.validation_strategy(*self.args, **self.kwargs)

@@ -6,7 +6,8 @@ def _buy_plane(owner):
     Args:
         owner (Transaction): Transaction instance that will use strategy
 
-    Returns: None
+    Returns:
+        None
 
     """
 
@@ -22,7 +23,9 @@ def _buy_gun(owner):
     Args:
         owner (Transaction): Transaction instance that will use strategy
 
-    Returns: None
+    Returns:
+         None
+
     """
 
     owner.transaction['buyer'].account.decrease(owner.transaction['price'])
@@ -37,8 +40,9 @@ def get_transaction(transaction):
     Args:
         transaction (dict): Dictionary with transaction details
 
-    Returns (Transaction): `Transaction` instance initialized with appropriate
-    transaction data dict and transaction strategy.
+    Returns
+        Transaction: `Transaction` instance initialized with appropriate
+            transaction data dict and transaction strategy.
 
     """
     # If a "gun_id" isn't present, assume plane buy
@@ -74,7 +78,8 @@ class Transaction:
         """
         Executes transaction strategy function
 
-        Returns: None
+        Returns:
+            None
 
         """
         self._transaction_strategy(self)

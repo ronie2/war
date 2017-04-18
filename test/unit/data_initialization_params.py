@@ -40,7 +40,6 @@ class_params = [
                 'balance': 'dict',
                 'decrease': 'function',
                 'has_enought_resource': 'function',
-                'as_dict': 'function'
             }
         }
     },
@@ -55,7 +54,6 @@ class_params = [
                 'has_plane': 'function',
                 'current_weapon': 'function',
                 'set_weapon': 'function',
-                'as_dict': 'function'
             }
         }
     },

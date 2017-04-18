@@ -13,6 +13,7 @@ class WarPlanesShop(Shop):
         Initializes shop with db. Super '__init__' method is used
         Args:
             equipment (dict): Equipment database like in example data
+
         """
         msg_validator = get_validator({'equipment': equipment})
         msg_validator.validate()
@@ -27,7 +28,8 @@ class WarPlanesShop(Shop):
             player (dict): Original example data `player` dict
             plane_id (int): Plane id
 
-        Returns: None
+        Returns:
+            None
 
         """
         msg_validator = get_validator({'player': player})
@@ -54,7 +56,8 @@ class WarPlanesShop(Shop):
             plane_id (int): Plane id
             gun_id (int): Gun id
 
-        Returns: None
+        Returns:
+            None
 
         """
         msg_validator = get_validator({'player': player})
@@ -81,7 +84,11 @@ class WarPlanesShop(Shop):
         Args:
             product_id (int): Product id to retrieve from DB
 
-        Returns (dict): Product specification. None if product not found.
+        Returns:
+            dict: Product specification. None if product not found.
+
+        Raises:
+            ProductDatabaseError: if product not found in DB
 
         """
         if not isinstance(product_id, int):
@@ -101,7 +108,8 @@ class WarPlanesShop(Shop):
         Args:
             product_id (int): Product id to retrieve from DB
 
-        Returns(dict/None): Returns price dict or None if product_id not found.
+        Returns
+            dict or None: Returns price dict or None if product_id not found.
 
         """
         product_spec = self._product_spec_by_id(product_id)
@@ -115,7 +123,8 @@ class WarPlanesShop(Shop):
         Args:
             plane_id (int): Plane id
 
-        Returns (set): Set containing ids of compatible guns
+        Returns
+            set: Set containing ids of compatible guns
 
         """
         product_spec = self._product_spec_by_id(plane_id)
