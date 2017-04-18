@@ -197,7 +197,7 @@ class Validator:
         if not callable(strategy):
             raise TypeError('Validation strategy should be callable')
 
-        self.validation_strategy = strategy
+        self._validation_strategy = strategy
         self.args = args
         self.kwargs = kwargs
 
@@ -209,4 +209,4 @@ class Validator:
              None
 
         """
-        self.validation_strategy(*self.args, **self.kwargs)
+        self._validation_strategy(*self.args, **self.kwargs)

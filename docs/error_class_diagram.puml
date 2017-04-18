@@ -1,17 +1,16 @@
 @startuml
 class Exception
-class ShopErrors
+class ShopError
+class TransactionError
 class TransactionValidationError
-class ProductsNotCompatible
-class ProductAlreadyBoat
-class NotEnoughtResources
-class NoSuchPlaneInHangar
+class MessageValidationError
+class ProductDatabaseError
 
-Exception <|-- ShopErrors
-ShopErrors <|-- TransactionValidationError
-TransactionValidationError <|-- ProductsNotCompatible
-TransactionValidationError <|-- ProductAlreadyBoat
-TransactionValidationError <|-- NotEnoughtResources
-TransactionValidationError <|-- NoSuchPlaneInHangar
+
+Exception <|-- ShopError
+ShopError <|-- TransactionError
+ShopError <|-- ProductDatabaseError
+TransactionError <|-- TransactionValidationError
+TransactionError <|-- MessageValidationError
 hide members
 @enduml

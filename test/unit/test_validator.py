@@ -4,7 +4,7 @@ from test.unit.fixture_logic import *
 
 def test_validator_init_values(validator_obj, ref_transaction_dummy):
     """Tests that instance values are initialized correct"""
-    strategy = validator_obj['validator_obj'].validation_strategy
+    strategy = validator_obj['validator_obj']._validation_strategy
     kwargs = validator_obj['validator_obj'].kwargs
     mock = validator_obj['mock']
 

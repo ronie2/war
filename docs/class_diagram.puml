@@ -1,12 +1,18 @@
 @startuml
 
 object get_transaction
-object _buy_plane
-object _buy_gun
+object transaction._buy_plane
+object transaction._buy_gun
 
-object get_hangar
-object get_buyer
-object get_account
+object buyer.get_hangar
+object buyer.get_buyer
+object buyer.get_account
+
+object validator._player_msg
+object validator._equipment_msg
+object validator._buy_plane
+object validator._buy_gun
+object validator.get_validator
 
 class Shop {
 + db
@@ -19,7 +25,6 @@ class WarPlanesShop {
 - _product_spec_by_id()
 - _product_price_by_id()
 # __compatible_guns()
-# __update_player()
 }
 class Buyer {
 + id
@@ -31,6 +36,12 @@ class Account {
 + decrease()
 + has_enought_resource()
 + as_dict()
+}
+class Validator {
+- _validation_strategy
+- args
+- kwargs
++ validate()
 }
 class Hangar {
 + planes
@@ -45,20 +56,30 @@ class Transaction {
 + transaction
 + commit()
 }
+
 Shop <|-- WarPlanesShop
-Account <-- get_account
-Hangar <-- get_hangar
-Transaction <- get_transaction
-Buyer <-- get_buyer
-Buyer --> get_account
-Buyer --> get_hangar
-Buyer o..> Account
-Buyer o..> Hangar
-WarPlanesShop -> get_buyer
-WarPlanesShop --> get_transaction
-WarPlanesShop o.. Buyer
-WarPlanesShop o.. Transaction
-_buy_plane - get_transaction
-_buy_gun - get_transaction
+Account <.. buyer.get_account
+Hangar <.. buyer.get_hangar
+Transaction <.. get_transaction
+Validator <.. validator.get_validator
+Buyer <.. buyer.get_buyer
+Buyer ..> buyer.get_account
+Buyer ..> buyer.get_hangar
+Buyer o--> Account
+Buyer o--> Hangar
+WarPlanesShop ..> buyer.get_buyer
+WarPlanesShop ..> get_transaction
+WarPlanesShop ..> validator.get_validator
+WarPlanesShop o--> Buyer
+WarPlanesShop o--> Transaction
+WarPlanesShop o--> Validator
+transaction._buy_plane <--o Transaction
+transaction._buy_gun <--o Transaction
+
+validator._player_msg <--o Validator
+validator._equipment_msg <--o Validator
+validator._buy_plane <--o Validator
+validator._buy_gun <--o Validator
+
 
 @enduml

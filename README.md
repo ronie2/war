@@ -1,12 +1,25 @@
 # Planes Shop
-This repo implements Shop for selling planes.
+This repo implements Shop selling planes.
 Task spec: [Shop Task](https://gist.github.com/ybilopolov/54181ade63465a99770144876e43f4a4)
 
+##Requirements
+- Python 3
+- pytest 3 
+
+##To run tests
+```
+$ git clone https://github.com/ronie2/war.git
+$ cd war
+$ python -m pytest
+```
+
+
 ## Implementation details
+[Class diagram](https://github.com/ronie2/war/blob/master/docs/class_diagram.svg)
 
-## Basic risk analysis
+[Error class diagram](https://github.com/ronie2/war/blob/master/docs/error_class_diagram.svg)
 
-## Coverage
+## Test coverage
 Coverage measured with pytest-cov package:
 ```
 Name                 Stmts   Miss  Cover
